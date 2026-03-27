@@ -77,7 +77,7 @@ html,body{height:100%;background:var(--bg);color:var(--t);font-family:'Sarabun',
 .pgrid{display:grid;grid-template-columns:1fr 1fr;gap:6px;align-content:start}
 
 /* character card */
-.cc{width:100%;background:#000;border:1px solid var(--br);border-radius:10px;
+.cc{width:100%;background:transparent;border:1px solid var(--br);border-radius:10px;
   padding:4px 3px 3px;text-align:center;cursor:grab;
   transition:border-color .15s,transform .15s,opacity .15s;user-select:none;
   overflow:hidden;-webkit-user-drag:element}
@@ -86,7 +86,6 @@ html,body{height:100%;background:var(--bg);color:var(--t);font-family:'Sarabun',
 .cc img{pointer-events:none;display:block;width:100%;height:110px;
   object-fit:contain;object-position:center bottom}
 .av{font-size:2rem;margin-bottom:2px}
-.av img{width:44px;height:44px;border-radius:50%;object-fit:cover}
 .cn{font-size:.65rem;color:var(--d)}
 
 .df{text-align:center;padding:.65rem 0 .4rem;flex-shrink:0}
@@ -186,18 +185,20 @@ html,body{height:100%;background:var(--bg);color:var(--t);font-family:'Sarabun',
 .bta .btlbl{color:#93C5FD}.btb .btlbl{color:#FCA5A5}
 .bchs{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
 
-/* bonus char card — flip */
-.bc{width:90px;cursor:pointer;user-select:none}
+/* bonus char card */
+.bc{width:140px;cursor:pointer;user-select:none}
 .bc.used{opacity:.4;pointer-events:none}
-.bc-wrap{background:#000;border:1px solid var(--br);border-radius:10px;
-  padding:5px 4px 8px;text-align:center;transition:all .2s;min-height:90px;
+.bc-wrap{background:transparent;border:1px solid var(--br);border-radius:12px;
+  padding:6px 6px 10px;text-align:center;transition:all .2s;min-height:160px;
   display:flex;flex-direction:column;align-items:center;justify-content:flex-end;overflow:hidden}
-.bc:hover:not(.used) .bc-wrap{border-color:rgba(255,255,255,.35);transform:scale(1.05)}
+.bc-wrap img{width:100%;height:140px;object-fit:contain;object-position:center bottom;
+  display:block;pointer-events:none}
+.bc:hover:not(.used) .bc-wrap{border-color:rgba(255,255,255,.35);transform:scale(1.04)}
 .bc.revealed .bc-wrap{background:rgba(245,197,24,.1);border-color:var(--gb)}
-.bc .bpts{font-size:1.3rem;font-weight:900;color:var(--gold);display:none}
+.bc .bpts{font-size:1.4rem;font-weight:900;color:var(--gold);display:none;margin-top:6px}
 .bc.revealed .bpts{display:block}
 .bc.revealed img{display:none}
-.bc .bwhy{font-size:.6rem;color:var(--d);margin-top:3px;line-height:1.3;display:none;padding:0 4px}
+.bc .bwhy{font-size:.62rem;color:var(--d);margin-top:4px;line-height:1.35;display:none;padding:0 4px}
 .bc.revealed .bwhy{display:block}
 
 .bnext{display:block;margin:.65rem auto 0;background:var(--gold);color:#07090f;
@@ -353,7 +354,7 @@ const CHARS = [
 
 const ANS = [
   {r:1,  txt:'AI ไม่มีความรู้สึก',          cnt:49, note:'Theme 3: A Brain Without a Heart — Z1: "สมองไร้วิญญาณ" Z3: "AI ล้างก้นเด็กได้แต่สัมผัสอ่อนโยนไม่ได้"',       cite:'Holmes et al. (2022): AI ขาด human presence ที่จำเป็นต่อการสอน'},
-  {r:2,  txt:'ครูคือความเป็นมนุษย์',         cnt:40, note:'Theme 3 — Z5: "ครูสอนความหมายของการเป็นมนุษย์ AI ไม่เข้าใจหัวใจมนุษย์ ไม่มีทางแทนกันได้"',          cite:'Van Manen (1990): hermeneutic phenomenology เน้นความหมายระหว่างมนุษย์'},
+  {r:2,  txt:'ครูสอนความเป็นมนุษย์',        cnt:40, note:'Theme 3 — Z5: "ครูสอนความหมายของการเป็นมนุษย์ AI ไม่เข้าใจหัวใจมนุษย์ ไม่มีทางแทนกันได้"',          cite:'Gouseti et al. (2025): ครูใน K-12 มีความเชื่อแก่นแท้ว่าสิ่งที่ครูทำเพื่อมนุษย์ AI ไม่อาจทดแทนได้'},
   {r:3,  txt:'AI คือสมองสำรอง',              cnt:31, note:'4/7 คน — ใบเตย: "สมองสำรองข้างนอก" มิ้น: "ตัวช่วยสมองอีกซีก" ปิ่น: "สมองที่รวบรวมความรู้ทุกอย่าง"', cite:'Prensky (2001): Digital Natives มองเทคโนโลยีเป็นส่วนต่อขยายตัวเอง'},
   {r:4,  txt:'ต้องกรองก่อนใช้เสมอ',          cnt:27, note:'Theme 1 & 2 — ใบเตย: "ต้องกรองอีกเยอะ คุยจนมั่นใจ" หลังสอนผิดเพราะเชื่อ ChatGPT 100%',              cite:'Holmes et al. (2022): human oversight คือหลักจริยธรรม AI ในการศึกษา'},
   {r:5,  txt:'ใช้ AI ทำแผนการสอน',           cnt:24, note:'5/7 คน — use case ที่พบบ่อยที่สุด ครูใช้ AI ร่างโครงสร้างแผน แล้วปรับด้วยตัวเอง',                    cite:'Wieczorek et al. (2025): ครูขาดแนวทางชัดเจนเรื่องใช้ AI ในงานวิชาชีพ'},
