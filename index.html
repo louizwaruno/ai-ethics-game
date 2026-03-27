@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>ครู Gen Z × AI Ethics</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#F5C518;--gd:rgba(245,197,24,.13);--gb:rgba(245,197,24,.3);
+  --a:#3B82F6;--ad:rgba(59,130,246,.13);--ab:rgba(59,130,246,.4);
+  --b:#EF4444;--bd:rgba(239,68,68,.13);--bb:rgba(239,68,68,.4);
+  --bg:#07090f;--s1:rgba(255,255,255,.05);--s2:rgba(255,255,255,.09);
+  --br:rgba(255,255,255,.1);--t:#fff;--d:rgba(255,255,255,.5);--f:rgba(255,255,255,.2);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg);color:var(--t);font-family:'Sarabun',sans-serif;font-size:15px;overflow:hidden}
+.scr{display:none;position:fixed;inset:0;flex-direction:column;overflow-y:auto}
+.scr.on{display:flex}
+
+/* STARS */
+#stars{position:fixed;inset:0;pointer-events:none;z-index:0}
+.str{position:absolute;border-radius:50%;background:#fff;animation:tw 3s infinite}
+@keyframes tw{0%,100%{opacity:0}50%{opacity:.4}}
+
+/* ══ INTRO ══ */
+#si{align-items:center;justify-content:center;text-align:center;padding:2rem 2rem 7rem;
+    background:radial-gradient(ellipse 80% 55% at 50% 38%,#0c1829,var(--bg));z-index:1;
+    position:relative}
+.badge{display:inline-flex;gap:6px;align-items:center;background:var(--gd);
+  border:1px solid var(--gb);color:var(--gold);padding:4px 16px;border-radius:20px;
+  font-size:.74rem;font-weight:700;margin-bottom:1.2rem;letter-spacing:.5px}
+.ititle{font-size:clamp(2.4rem,7vw,4rem);font-weight:900;color:var(--gold);
+  line-height:1.1;margin-bottom:.3rem;text-shadow:0 0 70px rgba(245,197,24,.18)}
+.isub{font-size:.95rem;color:var(--d);margin-bottom:.15rem}
+.icity{font-size:.7rem;color:var(--f);margin-bottom:2rem}
+.ifooter{position:absolute;bottom:0;left:0;right:0;padding:1rem 1.5rem;
+  border-top:1px solid rgba(255,255,255,.07);background:rgba(0,0,0,.25);
+  text-align:center}
+.ifooter p{font-size:.7rem;color:var(--f);line-height:1.65}
+.ifooter span{color:rgba(255,255,255,.38)}
+.qbox{background:var(--s1);border:1px solid var(--gb);border-radius:12px;
+  padding:1rem 1.5rem;max-width:480px;margin-bottom:2rem}
+.qbox small{font-size:.68rem;color:var(--f);display:block;margin-bottom:4px}
+.qbox p{font-size:1rem;font-weight:700}
+.btn{background:var(--gold);color:#07090f;border:none;padding:.85rem 2.5rem;
+  font-size:1.05rem;font-weight:800;border-radius:50px;cursor:pointer;
+  font-family:'Sarabun',sans-serif;
+  transition:transform .15s,box-shadow .15s;
+  box-shadow:0 0 40px rgba(245,197,24,.15)}
+.btn:hover{transform:scale(1.05);box-shadow:0 0 60px rgba(245,197,24,.28)}
+
+/* ══ DRAFT ══ */
+#sd{padding:1.25rem 1.5rem 2rem;z-index:1}
+.dh{text-align:center;margin-bottom:1.1rem}
+.dh h2{font-size:1.5rem;font-weight:800;color:var(--gold);margin-bottom:3px}
+.dh p{font-size:.76rem;color:var(--d)}
+.dgrid{display:grid;grid-template-columns:1fr 200px 1fr;gap:1rem;max-width:900px;margin:0 auto}
+.tz{border-radius:14px;padding:1rem;min-height:260px;border:2px dashed;
+  display:flex;flex-direction:column;transition:background .15s}
+.tza{background:var(--ad);border-color:var(--ab)}
+.tzb{background:var(--bd);border-color:var(--bb)}
+.tz.ov{border-style:solid;background:rgba(255,255,255,.07)}
+.ztt{text-align:center;font-size:1rem;font-weight:800;padding-bottom:.6rem;
+  margin-bottom:.6rem;border-bottom:1px solid rgba(255,255,255,.07)}
+.tza .ztt{color:#93C5FD}.tzb .ztt{color:#FCA5A5}
+.zch{display:flex;flex-wrap:wrap;gap:7px;min-height:80px}
+.pcol{display:flex;flex-direction:column;align-items:center;gap:.6rem}
+.plbl{font-size:.7rem;color:var(--d);font-weight:700;text-transform:uppercase;letter-spacing:.8px}
+.pdrop{border:1px dashed rgba(255,255,255,.12);border-radius:10px;padding:7px;
+  min-height:60px;width:100%;transition:background .15s}
+.pdrop.ov{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.28)}
+.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+
+/* character card */
+.cc{width:85px;background:var(--s1);border:1px solid var(--br);border-radius:10px;
+  padding:8px 5px;text-align:center;cursor:grab;
+  transition:background .15s,transform .15s,opacity .15s;user-select:none}
+.cc:hover{background:var(--s2);transform:scale(1.05)}
+.cc.dr{opacity:.2}
+.av{font-size:2rem;margin-bottom:2px}
+/* custom image support */
+.av img{width:44px;height:44px;border-radius:50%;object-fit:cover}
+.cn{font-size:.65rem;color:var(--d)}
+
+.df{text-align:center;margin-top:1.1rem}
+.bgo{background:var(--gold);color:#07090f;border:none;padding:.78rem 2rem;
+  font-size:.95rem;font-weight:800;border-radius:50px;cursor:pointer;
+  font-family:'Sarabun',sans-serif;opacity:.3;pointer-events:none;transition:all .2s}
+.bgo.rdy{opacity:1;pointer-events:all}
+.bgo.rdy:hover{transform:scale(1.04)}
+.df small{display:block;margin-top:5px;font-size:.68rem;color:var(--f)}
+
+/* ══ GAME ══ */
+#sg{background:var(--bg);height:100vh;overflow:hidden;z-index:1}
+.gbar{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:.75rem;
+  padding:.65rem 1.25rem;background:rgba(0,0,0,.4);
+  border-bottom:1px solid rgba(245,197,24,.1);flex-shrink:0}
+.sb{display:flex;align-items:center;gap:8px}
+.sb.r{flex-direction:row-reverse}
+.savs{display:flex;gap:2px;flex-wrap:wrap}
+.savs span{font-size:1.2rem}
+.snum{font-size:1.85rem;font-weight:900}
+.snum.a{color:#93C5FD}.snum.b{color:#FCA5A5}
+.slbl{font-size:.63rem;color:var(--d)}
+.gctr{text-align:center}
+.tbadge{display:inline-block;padding:4px 14px;border-radius:20px;
+  font-size:.78rem;font-weight:700;margin-bottom:3px;transition:all .25s}
+.tbadge.ta{background:var(--ad);border:1px solid var(--ab);color:#93C5FD}
+.tbadge.tb{background:var(--bd);border:1px solid var(--bb);color:#FCA5A5}
+.gq{text-align:center;padding:.6rem 1.25rem .3rem;flex-shrink:0}
+.ql{font-size:.65rem;color:var(--f);margin-bottom:2px}
+.qt{font-size:clamp(.82rem,1.9vw,.98rem);font-weight:700;color:var(--gold)}
+
+/* ── BOARD ── */
+.board{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;
+  padding:.45rem 1.25rem;max-width:920px;margin:0 auto;width:100%;
+  flex:1;align-content:start}
+
+.panel{
+  border-radius:11px;padding:10px 10px 8px;
+  border:1.5px solid var(--br);background:var(--s1);
+  cursor:pointer;transition:background .15s,border-color .2s;
+  display:flex;flex-direction:column;align-items:center;justify-content:space-between;
+  min-height:96px;position:relative;overflow:hidden;
+  user-select:none}
+.panel:hover:not(.done){background:var(--s2);border-color:rgba(255,255,255,.2)}
+.panel.done{cursor:default}
+.panel.done.pa{background:var(--ad);border-color:var(--ab)}
+.panel.done.pb{background:var(--bd);border-color:var(--bb)}
+
+.ptxt{font-size:.72rem;font-weight:700;line-height:1.35;text-align:center;
+  color:var(--t);flex:1;display:flex;align-items:center;justify-content:center}
+.panel:not(.done) .ptxt{color:rgba(255,255,255,.55)}
+
+/* slot number */
+.pslot{font-size:1.6rem;font-weight:900;min-height:2rem;
+  display:flex;align-items:center;justify-content:center;
+  margin-top:4px;overflow:hidden;position:relative}
+.pslot .dig{
+  display:inline-block;
+  animation:none;
+  color:var(--gold)}
+.pslot.rolling .dig{
+  animation:roll .07s linear infinite}
+@keyframes roll{
+  0%{transform:translateY(-100%);opacity:0}
+  50%{transform:translateY(0);opacity:1}
+  100%{transform:translateY(100%);opacity:0}}
+.panel.done.pa .pslot .dig{color:#93C5FD}
+.panel.done.pb .pslot .dig{color:#FCA5A5}
+
+/* score pop */
+@keyframes spop{0%{transform:translateY(0);opacity:1}100%{transform:translateY(-45px);opacity:0}}
+.spop{position:fixed;pointer-events:none;font-size:1.55rem;font-weight:900;
+  z-index:999;animation:spop .85s ease-out forwards}
+.spop.a{color:#93C5FD}.spop.b{color:#FCA5A5}
+
+.gend-btn{display:block;margin:.4rem auto .65rem;background:var(--gd);
+  color:var(--gold);border:1px solid var(--gb);padding:.52rem 1.8rem;
+  border-radius:50px;font-family:'Sarabun',sans-serif;font-size:.82rem;
+  font-weight:700;cursor:pointer;transition:background .15s;flex-shrink:0}
+.gend-btn:hover{background:rgba(245,197,24,.2)}
+
+/* ══ BONUS ══ */
+#sb-scr{background:var(--bg);z-index:1;padding:1.4rem 1.5rem 2rem;overflow-y:auto}
+.bh{text-align:center;margin-bottom:1.1rem}
+.bh h2{font-size:1.45rem;font-weight:800;color:var(--gold);margin-bottom:3px}
+.bh p{font-size:.76rem;color:var(--d)}
+.bsrow{display:flex;gap:12px;justify-content:center;margin-bottom:1.1rem}
+.bsbox{background:var(--s1);border-radius:10px;padding:.7rem 1.6rem;text-align:center;min-width:120px}
+.bsl{font-size:.68rem;color:var(--d);margin-bottom:3px}
+.bsn{font-size:1.9rem;font-weight:900}
+.bsn.a{color:#93C5FD}.bsn.b{color:#FCA5A5}
+.bgrid{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem;max-width:780px;margin:0 auto 1.1rem}
+.bteam{border-radius:12px;padding:1rem}
+.bta{background:var(--ad);border:1px solid var(--ab)}
+.btb{background:var(--bd);border:1px solid var(--bb)}
+.btlbl{font-size:.83rem;font-weight:800;margin-bottom:.7rem;text-align:center}
+.bta .btlbl{color:#93C5FD}.btb .btlbl{color:#FCA5A5}
+.bchs{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+
+/* bonus char card — flip */
+.bc{width:88px;cursor:pointer;user-select:none}
+.bc.used{opacity:.4;pointer-events:none}
+.bc-wrap{background:var(--s1);border:1px solid var(--br);border-radius:10px;
+  padding:8px 5px;text-align:center;transition:all .2s;min-height:80px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center}
+.bc:hover:not(.used) .bc-wrap{background:var(--s2);transform:scale(1.05)}
+.bc.revealed .bc-wrap{background:rgba(245,197,24,.1);border-color:var(--gb)}
+.bc .bpts{font-size:1.3rem;font-weight:900;color:var(--gold);display:none}
+.bc.revealed .bpts{display:block}
+.bc.revealed .av{display:none}
+.bc.revealed .cn{display:none}
+.bc .bwhy{font-size:.6rem;color:var(--d);margin-top:3px;line-height:1.3;display:none}
+.bc.revealed .bwhy{display:block}
+
+.bnext{display:block;margin:.65rem auto 0;background:var(--gold);color:#07090f;
+  border:none;padding:.72rem 2rem;border-radius:50px;font-family:'Sarabun',sans-serif;
+  font-size:.92rem;font-weight:800;cursor:pointer;transition:transform .15s}
+.bnext:hover{transform:scale(1.04)}
+
+/* ══ END ══ */
+#se{background:var(--bg);padding:1.5rem 1.5rem 2.5rem;overflow-y:auto;z-index:1}
+.ehero{text-align:center;margin-bottom:1.4rem}
+.trp{font-size:3.2rem;display:block;margin-bottom:.35rem}
+.wlbl{font-size:clamp(1.4rem,4vw,1.9rem);font-weight:900;margin-bottom:.18rem}
+.wlbl.wa{color:#93C5FD}.wlbl.wb{color:#FCA5A5}.wlbl.wd{color:var(--gold)}
+.frow{display:flex;gap:10px;justify-content:center;margin-bottom:.3rem}
+.fs{background:var(--s1);border-radius:10px;padding:.65rem 1.5rem;text-align:center;min-width:110px}
+.fsl{font-size:.68rem;color:var(--d);margin-bottom:3px}
+.fsn{font-size:1.85rem;font-weight:900}
+.fsn.a{color:#93C5FD}.fsn.b{color:#FCA5A5}
+.rwrap{max-width:700px;margin:0 auto}
+.rhd{text-align:center;font-size:.98rem;font-weight:800;color:var(--gold);
+  margin-bottom:.85rem;padding-bottom:.45rem;border-bottom:1px solid var(--gb)}
+.rc{background:var(--s1);border:1px solid var(--br);border-radius:9px;
+  padding:.7rem .95rem;margin-bottom:7px;
+  display:grid;grid-template-columns:28px 1fr 48px;gap:8px;align-items:start}
+.rc:hover{background:var(--s2)}
+.rr{width:26px;height:26px;background:var(--gold);color:#07090f;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.72rem;
+  flex-shrink:0;margin-top:2px}
+.rr.wa{background:var(--a);color:#fff}.rr.wb{background:var(--b);color:#fff}
+.rans{font-size:.86rem;font-weight:700;margin-bottom:3px}
+.rnote{font-size:.68rem;color:var(--d);line-height:1.5}
+.rnote em{color:var(--gold);font-style:normal;font-weight:600}
+.rcnt{text-align:right}
+.rcnt b{font-size:1.1rem;font-weight:900;color:var(--gold);display:block}
+.rcnt small{font-size:.6rem;color:var(--f)}
+.brst{display:block;margin:1.4rem auto 0;background:var(--s1);border:1px solid var(--br);
+  color:var(--t);padding:.6rem 2rem;border-radius:50px;font-family:'Sarabun',sans-serif;
+  font-size:.86rem;cursor:pointer;transition:background .15s}
+.brst:hover{background:var(--s2)}
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12);border-radius:3px}
+</style>
+</head>
+<body>
+<div id="stars"></div>
+
+<!-- ══ INTRO ══ -->
+<div id="si" class="scr on">
+  <div class="badge">🎓 Advanced Qualitative Research</div>
+  <h1 class="ititle">Teacher Gen Z × AI Ethics</h1>
+  <p class="icity">Mr. Warunyu Nangam — NIDA, Thailand</p>
+  <div class="qbox">
+    <p>"ครู Gen Z 7 คน พูดถึงเรื่องใดมากที่สุดในการสัมภาษณ์?"</p>
+  </div>
+  <button class="btn" onclick="go('sd')">เริ่มเกมส์ →</button>
+  <div class="ifooter">
+    <p>This game is part of <strong style="color:rgba(255,255,255,.65)">HODI 6004 Advanced Qualitative Research</strong><br>
+    <span>Instructed by Assoc. Prof. Pawinee Petchsawang</span></p>
+  </div>
+</div>
+
+<!-- ══ DRAFT ══ -->
+<div id="sd" class="scr">
+  <div class="dh"><h2>🏆 แบ่งทีม</h2><p>ลากตัวละครเข้าทีม — แต่ละทีมต้องมีอย่างน้อย 1 ตัว</p></div>
+  <div class="dgrid">
+    <div class="tz tza" id="za" ondragover="dov(event)" ondragleave="dlv(event)" ondrop="drp(event,'a')">
+      <div class="ztt">🔵 ทีม A</div>
+      <div class="zch" id="zac"></div>
+    </div>
+    <div class="pcol">
+      <div class="plbl">ตัวละคร</div>
+      <div class="pdrop" ondragover="dov(event)" ondragleave="dlv(event)" ondrop="drp(event,'pool')">
+        <div class="pgrid" id="pg"></div>
+      </div>
+    </div>
+    <div class="tz tzb" id="zb" ondragover="dov(event)" ondragleave="dlv(event)" ondrop="drp(event,'b')">
+      <div class="ztt">🔴 ทีม B</div>
+      <div class="zch" id="zbc"></div>
+    </div>
+  </div>
+  <div class="df">
+    <button class="bgo" id="bgo" onclick="startGame()">เริ่มเล่น ▶</button>
+    <small>ต้องมีทีมละอย่างน้อย 1 ตัวละคร</small>
+  </div>
+</div>
+
+<!-- ══ GAME ══ -->
+<div id="sg" class="scr">
+  <div class="gbar">
+    <div class="sb">
+      <div class="savs" id="savA"></div>
+      <div><div class="slbl">ทีม A</div><div class="snum a" id="sA">0</div></div>
+    </div>
+    <div class="gctr">
+      <div class="tbadge ta" id="tbadge">🔵 ทีม A เลือกป้าย</div>
+    </div>
+    <div class="sb r">
+      <div class="savs" id="savB"></div>
+      <div style="text-align:right"><div class="slbl">ทีม B</div><div class="snum b" id="sB">0</div></div>
+    </div>
+  </div>
+  <div class="gq">
+    <div class="ql">📊 คำถามสำรวจ</div>
+    <div class="qt">"ครู Gen Z 7 คน พูดถึงเรื่องใดมากที่สุดในการสัมภาษณ์?"</div>
+  </div>
+  <div class="board" id="board"></div>
+  <button class="gend-btn" onclick="goBonus()">เปิด Bonus Round →</button>
+</div>
+
+<!-- ══ BONUS ══ -->
+<div id="sb-scr" class="scr">
+  <div class="bh"><h2>🎁 Bonus Round</h2><p>Host กดตัวละครแต่ละตัว เพื่อเปิดคะแนนโบนัสและบวกให้ทีม</p></div>
+  <div class="bsrow">
+    <div class="bsbox"><div class="bsl" style="color:#93C5FD">ทีม A</div><div class="bsn a" id="bsA">0</div></div>
+    <div class="bsbox"><div class="bsl" style="color:#FCA5A5">ทีม B</div><div class="bsn b" id="bsB">0</div></div>
+  </div>
+  <div class="bgrid">
+    <div class="bteam bta"><div class="btlbl">🔵 ทีม A</div><div class="bchs" id="bcA"></div></div>
+    <div class="bteam btb"><div class="btlbl">🔴 ทีม B</div><div class="bchs" id="bcB"></div></div>
+  </div>
+  <button class="bnext" onclick="endGame()">ดูผลสรุปงานวิจัย →</button>
+</div>
+
+<!-- ══ END ══ -->
+<div id="se" class="scr">
+  <div class="ehero">
+    <span class="trp" id="trp">🏆</span>
+    <div class="wlbl" id="wlbl"></div>
+    <p style="font-size:.78rem;color:var(--d);margin-bottom:.9rem">เกมส์จบแล้ว</p>
+    <div class="frow">
+      <div class="fs"><div class="fsl" style="color:#93C5FD">ทีม A</div><div class="fsn a" id="eA">0</div></div>
+      <div class="fs"><div class="fsl" style="color:#FCA5A5">ทีม B</div><div class="fsn b" id="eB">0</div></div>
+    </div>
+  </div>
+  <div class="rwrap">
+    <div class="rhd">📚 เชื่อมกับงานวิจัย — ครู Gen Z × AI Ethics</div>
+    <div id="rcards"></div>
+  </div>
+  <button class="brst" onclick="restart()">↩ เริ่มใหม่</button>
+</div>
+
+<script>
+/* ══ DATA ══ */
+const CHARS = [
+  // av: emoji OR '<img src="URL">' หลังจากได้รูปแล้ว
+  {id:1, av:'👩‍🏫', cn:'ครู ก', bonus:14, why:'วัดความไม่มั่นใจ 60% ตรง RQ'},
+  {id:2, av:'👨‍🏫', cn:'ครู ข', bonus:20, why:'เล่า Felt Ashamed ชัดที่สุด'},
+  {id:3, av:'👩‍🎓', cn:'นร. ค', bonus:18, why:'"ล้างก้นเด็กแต่สัมผัสไม่ได้" Theme 3'},
+  {id:4, av:'👨‍🎓', cn:'นร. ง', bonus:12, why:'eye contact + เส้นจริยธรรมตัวเอง'},
+  {id:5, av:'👩‍🏫', cn:'ครู จ', bonus:10, why:'ใช้ AI ส่วนตัว ตรง RQ น้อยกว่า'},
+  {id:6, av:'👨‍🎓', cn:'นร. ฉ', bonus:8,  why:'เน้นเกมการสอน ไม่ค่อยพูด ethical dilemma'},
+  {id:7, av:'👩‍🎓', cn:'นร. ช', bonus:16, why:'ครูใหม่สุด AI ไม่เข้าใจมนุษย์'},
+];
+
+const ANS = [
+  {r:1,  txt:'AI ไม่มีความรู้สึก',          cnt:49, note:'Theme 3: A Brain Without a Heart — Z1: "สมองไร้วิญญาณ" Z3: "AI ล้างก้นเด็กได้แต่สัมผัสอ่อนโยนไม่ได้"',       cite:'Holmes et al. (2022): AI ขาด human presence ที่จำเป็นต่อการสอน'},
+  {r:2,  txt:'ครูคือความเป็นมนุษย์',         cnt:40, note:'Theme 3 — Z5: "ครูสอนความหมายของการเป็นมนุษย์ AI ไม่เข้าใจหัวใจมนุษย์ ไม่มีทางแทนกันได้"',          cite:'Van Manen (1990): hermeneutic phenomenology เน้นความหมายระหว่างมนุษย์'},
+  {r:3,  txt:'AI คือสมองสำรอง',              cnt:31, note:'4/7 คน — ใบเตย: "สมองสำรองข้างนอก" มิ้น: "ตัวช่วยสมองอีกซีก" ปิ่น: "สมองที่รวบรวมความรู้ทุกอย่าง"', cite:'Prensky (2001): Digital Natives มองเทคโนโลยีเป็นส่วนต่อขยายตัวเอง'},
+  {r:4,  txt:'ต้องกรองก่อนใช้เสมอ',          cnt:27, note:'Theme 1 & 2 — ใบเตย: "ต้องกรองอีกเยอะ คุยจนมั่นใจ" หลังสอนผิดเพราะเชื่อ ChatGPT 100%',              cite:'Holmes et al. (2022): human oversight คือหลักจริยธรรม AI ในการศึกษา'},
+  {r:5,  txt:'ใช้ AI ทำแผนการสอน',           cnt:24, note:'5/7 คน — use case ที่พบบ่อยที่สุด ครูใช้ AI ร่างโครงสร้างแผน แล้วปรับด้วยตัวเอง',                    cite:'Wieczorek et al. (2025): ครูขาดแนวทางชัดเจนเรื่องใช้ AI ในงานวิชาชีพ'},
+  {r:6,  txt:'ให้เด็กคิดเองก่อน',            cnt:23, note:'Theme 2 — ปิ่น สารสิทธิ์: "อยากให้เด็กคิดก่อน ถ้าไม่ได้จริงๆ ค่อยใช้ AI" เส้นจริยธรรมที่ลากเอง',    cite:'Gouseti et al. (2025): ครูมีสัญชาตญาณเชิงคุณค่าแม้ไม่มีนโยบาย'},
+  {r:7,  txt:'AI ผิดถูกยังเป็นปัญหา',        cnt:18, note:'Theme 2: It Felt Like a Secret — Z6: "AI ทำให้เราไม่รู้ในสิ่งที่เราไม่รู้อยู่แล้ว"',                   cite:'Holmes et al. (2022): unknown unknowns — ปัญหาจริยธรรมที่ยังไม่ถูกตั้งชื่อ'},
+  {r:8,  txt:'AI แทนครูไม่ได้',              cnt:14, note:'7/7 คน — คำตอบที่เห็นพ้องทุกคน แม้ใช้ AI ในชีวิตประจำวัน ความเชื่อนี้ไม่สั่นคลอน',                  cite:'Holmes et al. (2022): teacher-student relationship เป็นแกนหลักการศึกษา'},
+  {r:9,  txt:'ไม่มั่นใจในความถูกต้อง',        cnt:13, note:'Theme 1: Felt Ashamed — 6/7 คน แคท: "AI ให้ความถูกต้องแค่สัก 60%" ความตึงเครียดที่แฝงอยู่ตลอด',       cite:'Holmes et al. (2022): algorithmic limitations ที่ตรวจไม่พบจนมีปัญหา'},
+  {r:10, txt:'เพราะรีบเลยใช้ AI',             cnt:10, note:'Theme 2 — Z1: "ความเร่งด่วนแทนที่การคิดรอบคอบ หลับตาข้างเดียวเชื่อ AI 100%"',                         cite:'Holmes et al. (2022): ครูนำทางใน ethical gray zone ปราศจากการสนับสนุน'},
+];
+
+/* ══ STATE ══ */
+let G = {teams:{a:[],b:[]},scores:{a:0,b:0},turn:'a',flipped:{},drag:null};
+
+/* ── stars ── */
+(()=>{
+  const sc=document.getElementById('stars');
+  for(let i=0;i<55;i++){
+    const s=document.createElement('div');s.className='str';
+    const z=Math.random()*2+1;
+    s.style.cssText=`width:${z}px;height:${z}px;top:${Math.random()*100}%;left:${Math.random()*100}%;animation-delay:${Math.random()*3}s;animation-duration:${2+Math.random()*3}s`;
+    sc.appendChild(s);}
+  renderPool();
+})();
+
+function go(id){document.querySelectorAll('.scr').forEach(s=>s.classList.remove('on'));document.getElementById(id).classList.add('on');}
+
+/* ── char render ── */
+function charAv(c){
+  // supports emoji or <img src="..."> string
+  return c.av.startsWith('<img') ? `<div class="av">${c.av}</div>` : `<div class="av">${c.av}</div>`;
+}
+
+/* ── DRAFT ── */
+function renderPool(){
+  const asgn=[...G.teams.a,...G.teams.b];
+  document.getElementById('pg').innerHTML=CHARS.filter(c=>!asgn.includes(c.id)).map(c=>
+    `<div class="cc" id="cc${c.id}" draggable="true" ondragstart="ds(event,${c.id})" ondragend="de()">
+      ${charAv(c)}</div>`).join('');
+}
+
+function renderTeams(){
+  ['a','b'].forEach(t=>{
+    const el=document.getElementById('z'+t+'c');
+    el.innerHTML=G.teams[t].map(id=>{const c=CHARS.find(x=>x.id===id);
+      return`<div class="cc" id="cc${c.id}" draggable="true" ondragstart="ds(event,${c.id})" ondragend="de()" style="width:80px">
+        ${charAv(c)}</div>`;}).join('');
+    el.ondragover=e=>e.preventDefault();
+    el.ondrop=e=>{e.preventDefault();e.stopPropagation();
+      const cid=parseInt(e.dataTransfer.getData('text'));
+      G.teams.a=G.teams.a.filter(x=>x!==cid);G.teams.b=G.teams.b.filter(x=>x!==cid);
+      renderPool();renderTeams();checkRdy();};
+  });checkRdy();
+}
+function checkRdy(){document.getElementById('bgo').classList.toggle('rdy',G.teams.a.length>=1&&G.teams.b.length>=1);}
+function ds(e,id){G.drag=id;e.dataTransfer.setData('text',id);setTimeout(()=>{const el=document.getElementById('cc'+id);if(el)el.classList.add('dr');},0);}
+function de(){if(G.drag){const el=document.getElementById('cc'+G.drag);if(el)el.classList.remove('dr');}}
+function dov(e){e.preventDefault();e.currentTarget.classList.add('ov');}
+function dlv(e){e.currentTarget.classList.remove('ov');}
+function drp(e,zone){
+  e.preventDefault();e.currentTarget.classList.remove('ov');
+  const id=parseInt(e.dataTransfer.getData('text'));if(!id)return;
+  G.teams.a=G.teams.a.filter(x=>x!==id);G.teams.b=G.teams.b.filter(x=>x!==id);
+  if(zone==='a')G.teams.a.push(id);else if(zone==='b')G.teams.b.push(id);
+  renderPool();renderTeams();
+}
+
+/* ── GAME ── */
+function startGame(){
+  G.scores={a:0,b:0};G.turn='a';G.flipped={};
+  ['a','b'].forEach(t=>{
+    document.getElementById('sav'+t.toUpperCase()).innerHTML=
+      G.teams[t].map(id=>{const c=CHARS.find(x=>x.id===id);
+        return c.av.startsWith('<img')?c.av:`<span>${c.av}</span>`;}).join('');
+  });
+  renderBoard();
+  document.getElementById('sA').dataset.val='0';
+  document.getElementById('sB').dataset.val='0';
+  document.getElementById('sA').textContent='0';
+  document.getElementById('sB').textContent='0';
+  updTurn();go('sg');
+}
+
+function renderBoard(){
+  document.getElementById('board').innerHTML=ANS.map((a,i)=>
+    `<div class="panel" id="p${i}" onclick="pickPanel(${i})">
+       <div class="ptxt">${a.txt}</div>
+       <div class="pslot" id="ps${i}"></div>
+     </div>`).join('');
+}
+
+/* slot machine number reveal */
+function pickPanel(i){
+  if(G.flipped[i]!==undefined)return;
+  const t=G.turn;
+  G.flipped[i]=t;
+  G.scores[t]+=ANS[i].cnt;
+
+  const panel=document.getElementById('p'+i);
+  panel.classList.add('done','p'+t);
+  panel.onclick=null;
+
+  const slot=document.getElementById('ps'+i);
+  const slotDur=Math.min(1800,ANS[i].cnt*18);
+  slotCount(slot,ANS[i].cnt,t);
+  showPop(panel,t,'+'+ANS[i].cnt);
+
+  // HUD score animates AFTER panel slot finishes
+  updHUD(slotDur+120);
+
+  G.turn=t==='a'?'b':'a';
+  updTurn();
+  if(Object.keys(G.flipped).length===ANS.length)setTimeout(goBonus,slotDur+900);
+}
+
+function slotCount(el, target, team){
+  el.innerHTML=`<span class="dig">0</span>`;
+  const dig=el.querySelector('.dig');
+  const dur=Math.min(1800, target*18);
+  const start=performance.now();
+  const colorClass=team==='a'?'#93C5FD':'#FCA5A5';
+  dig.style.color=colorClass;
+  el.classList.add('rolling');
+
+  function step(now){
+    const progress=Math.min((now-start)/dur,1);
+    // ease out
+    const eased=1-Math.pow(1-progress,3);
+    const cur=Math.round(eased*target);
+    dig.textContent=cur;
+    if(progress<1){requestAnimationFrame(step);}
+    else{dig.textContent=target;el.classList.remove('rolling');}
+  }
+  requestAnimationFrame(step);
+}
+
+function showPop(ref,team,txt){
+  const r=ref.getBoundingClientRect();
+  const el=document.createElement('div');
+  el.className='spop '+team;el.textContent=txt;
+  el.style.cssText=`left:${r.left+r.width/2-20}px;top:${r.top+8}px`;
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(),950);
+}
+
+function updHUD(delayMs){
+  const d=delayMs||0;
+  setTimeout(()=>{
+    animScore('sA',G.scores.a);
+    animScore('sB',G.scores.b);
+  },d);
+}
+function animScore(elId,target){
+  const el=document.getElementById(elId);
+  const from=parseInt(el.dataset.val||'0');
+  el.dataset.val=String(target);
+  if(from===target)return;
+  const dur=Math.min(900,Math.abs(target-from)*14);
+  const t0=performance.now();
+  (function step(now){
+    const p=Math.min((now-t0)/dur,1);
+    const e=1-Math.pow(1-p,3);
+    el.textContent=Math.round(from+(target-from)*e);
+    if(p<1)requestAnimationFrame(step);
+    else el.textContent=target;
+  })(performance.now());
+}
+function updTurn(){
+  const b=document.getElementById('tbadge');
+  if(G.turn==='a'){b.className='tbadge ta';b.textContent='🔵 ทีม A เลือกป้าย';}
+  else{b.className='tbadge tb';b.textContent='🔴 ทีม B เลือกป้าย';}
+}
+
+/* ── BONUS ── */
+function goBonus(){
+  document.getElementById('bsA').textContent=G.scores.a;
+  document.getElementById('bsB').textContent=G.scores.b;
+  ['a','b'].forEach(t=>{
+    document.getElementById('bc'+t.toUpperCase()).innerHTML=
+      G.teams[t].map(id=>{
+        const c=CHARS.find(x=>x.id===id);
+        return`<div class="bc" id="bcc${c.id}" onclick="revBonus(${c.id},'${t}')">
+          <div class="bc-wrap">
+            ${charAv(c)}
+            <div class="bpts">+${c.bonus}</div>
+            <div class="bwhy">${c.why}</div>
+          </div>
+        </div>`;}).join('');
+  });
+  go('sb-scr');
+}
+
+function revBonus(id,team){
+  const el=document.getElementById('bcc'+id);
+  if(!el||el.classList.contains('used'))return;
+  el.classList.add('revealed');
+  const c=CHARS.find(x=>x.id===id);
+  G.scores[team]+=c.bonus;
+  setTimeout(()=>el.classList.add('used'),600);
+  document.getElementById('bsA').textContent=G.scores.a;
+  document.getElementById('bsB').textContent=G.scores.b;
+  showPop(el,team,'+'+c.bonus);
+}
+
+/* ── END ── */
+function endGame(){
+  const a=G.scores.a,b=G.scores.b;
+  document.getElementById('eA').textContent=a;document.getElementById('eB').textContent=b;
+  const tr=document.getElementById('trp'),wl=document.getElementById('wlbl');
+  if(a>b){tr.textContent='🏆';wl.textContent='ทีม A ชนะ!';wl.className='wlbl wa';}
+  else if(b>a){tr.textContent='🏆';wl.textContent='ทีม B ชนะ!';wl.className='wlbl wb';}
+  else{tr.textContent='🤝';wl.textContent='เสมอกัน!';wl.className='wlbl wd';}
+  document.getElementById('rcards').innerHTML=ANS.map((ans,i)=>{
+    const who=G.flipped[i];
+    return`<div class="rc">
+      <div class="rr ${who?'w'+who:''}">${ans.r}</div>
+      <div><div class="rans">${ans.txt}</div>
+        <div class="rnote">${ans.note}<br><em>📖 ${ans.cite}</em></div></div>
+      <div class="rcnt"><b>${ans.cnt}</b><small>ครั้ง</small></div>
+    </div>`;}).join('');
+  go('se');
+}
+
+function restart(){
+  G={teams:{a:[],b:[]},scores:{a:0,b:0},turn:'a',flipped:{},drag:null};
+  document.getElementById('zac').innerHTML='';document.getElementById('zbc').innerHTML='';
+  renderPool();checkRdy();go('si');
+}
+</script>
+</body>
+</html>
