@@ -24,9 +24,9 @@ html,body{height:100%;background:var(--bg);color:var(--t);font-family:'Sarabun',
 @keyframes tw{0%,100%{opacity:0}50%{opacity:.4}}
 
 /* ══ INTRO ══ */
-#si{align-items:center;justify-content:center;text-align:center;padding:2rem 2rem 7rem;
+#si{align-items:center;justify-content:center;text-align:center;padding:2rem 2rem 0;
     background:radial-gradient(ellipse 80% 55% at 50% 38%,#0c1829,var(--bg));z-index:1;
-    position:relative}
+    position:relative;height:100vh;overflow:hidden}
 .badge{display:inline-flex;gap:6px;align-items:center;background:var(--gd);
   border:1px solid var(--gb);color:var(--gold);padding:4px 16px;border-radius:20px;
   font-size:.74rem;font-weight:700;margin-bottom:1.2rem;letter-spacing:.5px}
@@ -118,36 +118,32 @@ html,body{height:100%;background:var(--bg);color:var(--t);font-family:'Sarabun',
 .qt{font-size:clamp(.82rem,1.9vw,.98rem);font-weight:700;color:var(--gold)}
 
 /* ── BOARD ── */
-.board{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;
-  padding:.45rem 1.25rem;max-width:920px;margin:0 auto;width:100%;
-  flex:1;align-content:start}
+.board{display:grid;grid-template-columns:1fr 1fr;gap:10px;
+  padding:.4rem 1.5rem;max-width:820px;margin:0 auto;width:100%;
+  flex:1;align-content:start;overflow-y:auto}
 
 .panel{
-  border-radius:11px;padding:10px 10px 8px;
+  border-radius:14px;padding:18px 16px 14px;
   border:1.5px solid var(--br);background:var(--s1);
   cursor:pointer;transition:background .15s,border-color .2s;
   display:flex;flex-direction:column;align-items:center;justify-content:space-between;
-  min-height:96px;position:relative;overflow:hidden;
+  min-height:110px;position:relative;overflow:hidden;
   user-select:none}
 .panel:hover:not(.done){background:var(--s2);border-color:rgba(255,255,255,.2)}
 .panel.done{cursor:default}
 .panel.done.pa{background:var(--ad);border-color:var(--ab)}
 .panel.done.pb{background:var(--bd);border-color:var(--bb)}
 
-.ptxt{font-size:.72rem;font-weight:700;line-height:1.35;text-align:center;
+.ptxt{font-size:1rem;font-weight:700;line-height:1.4;text-align:center;
   color:var(--t);flex:1;display:flex;align-items:center;justify-content:center}
-.panel:not(.done) .ptxt{color:rgba(255,255,255,.55)}
+.panel:not(.done) .ptxt{color:rgba(255,255,255,.6)}
 
 /* slot number */
-.pslot{font-size:1.6rem;font-weight:900;min-height:2rem;
+.pslot{font-size:2rem;font-weight:900;min-height:2.4rem;
   display:flex;align-items:center;justify-content:center;
-  margin-top:4px;overflow:hidden;position:relative}
-.pslot .dig{
-  display:inline-block;
-  animation:none;
-  color:var(--gold)}
-.pslot.rolling .dig{
-  animation:roll .07s linear infinite}
+  margin-top:6px;overflow:hidden;position:relative}
+.pslot .dig{display:inline-block;animation:none;color:var(--gold)}
+.pslot.rolling .dig{animation:roll .07s linear infinite}
 @keyframes roll{
   0%{transform:translateY(-100%);opacity:0}
   50%{transform:translateY(0);opacity:1}
