@@ -51,8 +51,8 @@ html,body{height:100%;background:var(--bg);color:var(--t);font-family:'Sarabun',
 .btn:hover{transform:scale(1.05);box-shadow:0 0 60px rgba(245,197,24,.28)}
 
 /* ══ DRAFT ══ */
-#sd{padding:.9rem 1.25rem .7rem;z-index:1;background:var(--bg);}
-#sd.on{height:100vh;overflow:hidden}
+#sd{padding:.9rem 1.25rem .7rem;z-index:1;background:var(--bg)}
+#sd.on{height:100vh;overflow:hidden;display:flex;flex-direction:column}
 .dh{text-align:center;margin-bottom:.7rem;flex-shrink:0}
 .dh h2{font-size:1.4rem;font-weight:800;color:var(--gold);margin-bottom:2px}
 .dh p{font-size:.74rem;color:var(--d)}
@@ -67,7 +67,8 @@ html,body{height:100%;background:var(--bg);color:var(--t);font-family:'Sarabun',
 .ztt{text-align:center;font-size:.95rem;font-weight:800;padding-bottom:.5rem;
   margin-bottom:.5rem;border-bottom:1px solid rgba(255,255,255,.07);flex-shrink:0}
 .tza .ztt{color:#93C5FD}.tzb .ztt{color:#FCA5A5}
-.zch{display:flex;flex-wrap:wrap;gap:6px;overflow-y:auto;align-content:start;flex:1;padding:2px}
+.zch{display:flex;flex-wrap:wrap;gap:6px;overflow-y:auto;align-content:start;flex:1;padding:2px;pointer-events:none}
+.zch .cc{pointer-events:all}
 .pcol{display:flex;flex-direction:column;align-items:center;gap:.5rem;min-height:0;overflow:hidden}
 .plbl{font-size:.68rem;color:var(--d);font-weight:700;text-transform:uppercase;letter-spacing:.8px;flex-shrink:0}
 .pdrop{border:1px dashed rgba(255,255,255,.12);border-radius:10px;padding:6px;
@@ -195,9 +196,8 @@ html,body{height:100%;background:var(--bg);color:var(--t);font-family:'Sarabun',
 .bc.revealed .bc-wrap{background:rgba(245,197,24,.1);border-color:var(--gb)}
 .bc .bpts{font-size:1.3rem;font-weight:900;color:var(--gold);display:none}
 .bc.revealed .bpts{display:block}
-.bc.revealed .av{display:none}
-.bc.revealed .cn{display:none}
-.bc .bwhy{font-size:.6rem;color:var(--d);margin-top:3px;line-height:1.3;display:none}
+.bc.revealed img{display:none}
+.bc .bwhy{font-size:.6rem;color:var(--d);margin-top:3px;line-height:1.3;display:none;padding:0 4px}
 .bc.revealed .bwhy{display:block}
 
 .bnext{display:block;margin:.65rem auto 0;background:var(--gold);color:#07090f;
@@ -400,13 +400,9 @@ function renderTeams(){
   ['a','b'].forEach(t=>{
     const el=document.getElementById('z'+t+'c');
     el.innerHTML=G.teams[t].map(id=>{const c=CHARS.find(x=>x.id===id);
-      return`<div class="cc" id="cc${c.id}" draggable="true" ondragstart="ds(event,${c.id})" ondragend="de()" style="width:80px">
+      return`<div class="cc" id="cc${c.id}" draggable="true" ondragstart="ds(event,${c.id})" ondragend="de()">
         ${charAv(c)}</div>`;}).join('');
-    el.ondragover=e=>e.preventDefault();
-    el.ondrop=e=>{e.preventDefault();e.stopPropagation();
-      const cid=parseInt(e.dataTransfer.getData('text'));
-      G.teams.a=G.teams.a.filter(x=>x!==cid);G.teams.b=G.teams.b.filter(x=>x!==cid);
-      renderPool();renderTeams();checkRdy();};
+    // ไม่ set ondrop บน zch เพราะจะ block การ drop เข้าทีม
   });checkRdy();
 }
 function checkRdy(){document.getElementById('bgo').classList.toggle('rdy',G.teams.a.length>=1&&G.teams.b.length>=1);}
@@ -537,8 +533,10 @@ function updTurn(){
 
 /* ── BONUS ── */
 function goBonus(){
-  document.getElementById('bsA').textContent=G.scores.a;
-  document.getElementById('bsB').textContent=G.scores.b;
+  const bsA=document.getElementById('bsA');
+  const bsB=document.getElementById('bsB');
+  bsA.dataset.val=String(G.scores.a);bsA.textContent=G.scores.a;
+  bsB.dataset.val=String(G.scores.b);bsB.textContent=G.scores.b;
   ['a','b'].forEach(t=>{
     document.getElementById('bc'+t.toUpperCase()).innerHTML=
       G.teams[t].map(id=>{
@@ -561,8 +559,8 @@ function revBonus(id,team){
   const c=CHARS.find(x=>x.id===id);
   G.scores[team]+=c.bonus;
   setTimeout(()=>el.classList.add('used'),600);
-  document.getElementById('bsA').textContent=G.scores.a;
-  document.getElementById('bsB').textContent=G.scores.b;
+  animScore('bsA',G.scores.a);
+  animScore('bsB',G.scores.b);
   showPop(el,team,'+'+c.bonus);
 }
 
