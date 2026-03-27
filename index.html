@@ -51,40 +51,40 @@ html,body{height:100%;background:var(--bg);color:var(--t);font-family:'Sarabun',
 .btn:hover{transform:scale(1.05);box-shadow:0 0 60px rgba(245,197,24,.28)}
 
 /* ══ DRAFT ══ */
-#sd{padding:1.25rem 1.5rem 2rem;z-index:1}
-.dh{text-align:center;margin-bottom:1.1rem}
-.dh h2{font-size:1.5rem;font-weight:800;color:var(--gold);margin-bottom:3px}
-.dh p{font-size:.76rem;color:var(--d)}
-.dgrid{display:grid;grid-template-columns:1fr 200px 1fr;gap:1rem;max-width:900px;margin:0 auto}
-.tz{border-radius:14px;padding:1rem;min-height:260px;border:2px dashed;
-  display:flex;flex-direction:column;transition:background .15s}
+#sd{padding:.9rem 1.25rem .7rem;z-index:1;height:100vh;display:flex;flex-direction:column;overflow:hidden}
+.dh{text-align:center;margin-bottom:.7rem;flex-shrink:0}
+.dh h2{font-size:1.4rem;font-weight:800;color:var(--gold);margin-bottom:2px}
+.dh p{font-size:.74rem;color:var(--d)}
+.dgrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.75rem;
+  margin:0 auto;flex:1;min-height:0;width:100%;max-width:1200px}
+.tz{border-radius:14px;padding:.85rem;border:2px dashed;
+  display:flex;flex-direction:column;overflow:hidden;min-height:0;transition:background .15s}
 .tza{background:var(--ad);border-color:var(--ab)}
 .tzb{background:var(--bd);border-color:var(--bb)}
 .tz.ov{border-style:solid;background:rgba(255,255,255,.07)}
-.ztt{text-align:center;font-size:1rem;font-weight:800;padding-bottom:.6rem;
-  margin-bottom:.6rem;border-bottom:1px solid rgba(255,255,255,.07)}
+.ztt{text-align:center;font-size:.95rem;font-weight:800;padding-bottom:.5rem;
+  margin-bottom:.5rem;border-bottom:1px solid rgba(255,255,255,.07);flex-shrink:0}
 .tza .ztt{color:#93C5FD}.tzb .ztt{color:#FCA5A5}
-.zch{display:flex;flex-wrap:wrap;gap:7px;min-height:80px}
-.pcol{display:flex;flex-direction:column;align-items:center;gap:.6rem}
-.plbl{font-size:.7rem;color:var(--d);font-weight:700;text-transform:uppercase;letter-spacing:.8px}
-.pdrop{border:1px dashed rgba(255,255,255,.12);border-radius:10px;padding:7px;
-  min-height:60px;width:100%;transition:background .15s}
+.zch{display:flex;flex-wrap:wrap;gap:6px;overflow-y:auto;align-content:start;flex:1;padding:2px}
+.pcol{display:flex;flex-direction:column;align-items:center;gap:.5rem;min-height:0;overflow:hidden}
+.plbl{font-size:.68rem;color:var(--d);font-weight:700;text-transform:uppercase;letter-spacing:.8px;flex-shrink:0}
+.pdrop{border:1px dashed rgba(255,255,255,.12);border-radius:10px;padding:6px;
+  width:100%;transition:background .15s;flex:1;overflow-y:auto}
 .pdrop.ov{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.28)}
-.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:6px;align-content:start}
 
 /* character card */
-.cc{width:88px;background:#000;border:1px solid var(--br);border-radius:10px;
-  padding:5px 4px 4px;text-align:center;cursor:grab;
+.cc{width:100%;background:#000;border:1px solid var(--br);border-radius:10px;
+  padding:4px 3px 3px;text-align:center;cursor:grab;
   transition:border-color .15s,transform .15s,opacity .15s;user-select:none;
   overflow:hidden}
-.cc:hover{border-color:rgba(255,255,255,.35);transform:scale(1.05)}
+.cc:hover{border-color:rgba(255,255,255,.35);transform:scale(1.04)}
 .cc.dr{opacity:.2}
 .av{font-size:2rem;margin-bottom:2px}
-/* custom image support */
 .av img{width:44px;height:44px;border-radius:50%;object-fit:cover}
 .cn{font-size:.65rem;color:var(--d)}
 
-.df{text-align:center;margin-top:1.1rem}
+.df{text-align:center;padding:.65rem 0 .4rem;flex-shrink:0}
 .bgo{background:var(--gold);color:#07090f;border:none;padding:.78rem 2rem;
   font-size:.95rem;font-weight:800;border-radius:50px;cursor:pointer;
   font-family:'Sarabun',sans-serif;opacity:.3;pointer-events:none;transition:all .2s}
@@ -379,7 +379,7 @@ function go(id){document.querySelectorAll('.scr').forEach(s=>s.classList.remove(
 /* ── char render ── */
 function charAv(c){
   if(c.av==='img'){
-    return `<img src="${c.src}" style="width:72px;height:72px;object-fit:contain;object-position:center bottom;display:block;margin:0 auto">`;
+    return `<img src="${c.src}" style="width:100%;height:110px;object-fit:contain;object-position:center bottom;display:block;">`;
   }
   return `<div class="av">${c.av}</div>`;
 }
@@ -437,9 +437,14 @@ function startGame(){
 }
 
 function renderBoard(){
-  document.getElementById('board').innerHTML=ANS.map((a,i)=>
+  const order=ANS.map((_,i)=>i);
+  for(let i=order.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [order[i],order[j]]=[order[j],order[i]];
+  }
+  document.getElementById('board').innerHTML=order.map(i=>
     `<div class="panel" id="p${i}" onclick="pickPanel(${i})">
-       <div class="ptxt">${a.txt}</div>
+       <div class="ptxt">${ANS[i].txt}</div>
        <div class="pslot" id="ps${i}"></div>
      </div>`).join('');
 }
