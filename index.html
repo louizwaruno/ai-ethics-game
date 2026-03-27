@@ -73,10 +73,11 @@ html,body{height:100%;background:var(--bg);color:var(--t);font-family:'Sarabun',
 .pgrid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
 
 /* character card */
-.cc{width:85px;background:var(--s1);border:1px solid var(--br);border-radius:10px;
-  padding:8px 5px;text-align:center;cursor:grab;
-  transition:background .15s,transform .15s,opacity .15s;user-select:none}
-.cc:hover{background:var(--s2);transform:scale(1.05)}
+.cc{width:88px;background:#000;border:1px solid var(--br);border-radius:10px;
+  padding:5px 4px 4px;text-align:center;cursor:grab;
+  transition:border-color .15s,transform .15s,opacity .15s;user-select:none;
+  overflow:hidden}
+.cc:hover{border-color:rgba(255,255,255,.35);transform:scale(1.05)}
 .cc.dr{opacity:.2}
 .av{font-size:2rem;margin-bottom:2px}
 /* custom image support */
@@ -181,12 +182,12 @@ html,body{height:100%;background:var(--bg);color:var(--t);font-family:'Sarabun',
 .bchs{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
 
 /* bonus char card — flip */
-.bc{width:88px;cursor:pointer;user-select:none}
+.bc{width:90px;cursor:pointer;user-select:none}
 .bc.used{opacity:.4;pointer-events:none}
-.bc-wrap{background:var(--s1);border:1px solid var(--br);border-radius:10px;
-  padding:8px 5px;text-align:center;transition:all .2s;min-height:80px;
-  display:flex;flex-direction:column;align-items:center;justify-content:center}
-.bc:hover:not(.used) .bc-wrap{background:var(--s2);transform:scale(1.05)}
+.bc-wrap{background:#000;border:1px solid var(--br);border-radius:10px;
+  padding:5px 4px 8px;text-align:center;transition:all .2s;min-height:90px;
+  display:flex;flex-direction:column;align-items:center;justify-content:flex-end;overflow:hidden}
+.bc:hover:not(.used) .bc-wrap{border-color:rgba(255,255,255,.35);transform:scale(1.05)}
 .bc.revealed .bc-wrap{background:rgba(245,197,24,.1);border-color:var(--gb)}
 .bc .bpts{font-size:1.3rem;font-weight:900;color:var(--gold);display:none}
 .bc.revealed .bpts{display:block}
@@ -337,14 +338,13 @@ html,body{height:100%;background:var(--bg);color:var(--t);font-family:'Sarabun',
 <script>
 /* ══ DATA ══ */
 const CHARS = [
-  // av: emoji OR '<img src="URL">' หลังจากได้รูปแล้ว
-  {id:1, av:'👩‍🏫', cn:'ครู ก', bonus:14, why:'วัดความไม่มั่นใจ 60% ตรง RQ'},
-  {id:2, av:'👨‍🏫', cn:'ครู ข', bonus:20, why:'เล่า Felt Ashamed ชัดที่สุด'},
-  {id:3, av:'👩‍🎓', cn:'นร. ค', bonus:18, why:'"ล้างก้นเด็กแต่สัมผัสไม่ได้" Theme 3'},
-  {id:4, av:'👨‍🎓', cn:'นร. ง', bonus:12, why:'eye contact + เส้นจริยธรรมตัวเอง'},
-  {id:5, av:'👩‍🏫', cn:'ครู จ', bonus:10, why:'ใช้ AI ส่วนตัว ตรง RQ น้อยกว่า'},
-  {id:6, av:'👨‍🎓', cn:'นร. ฉ', bonus:8,  why:'เน้นเกมการสอน ไม่ค่อยพูด ethical dilemma'},
-  {id:7, av:'👩‍🎓', cn:'นร. ช', bonus:16, why:'ครูใหม่สุด AI ไม่เข้าใจมนุษย์'},
+  {id:1, av:'img', src:'char1.png', cn:'ครู ก', bonus:14, why:'วัดความไม่มั่นใจ 60% ตรง RQ'},
+  {id:2, av:'img', src:'char2.png', cn:'ครู ข', bonus:20, why:'เล่า Felt Ashamed ชัดที่สุด'},
+  {id:3, av:'img', src:'char3.png', cn:'นร. ค', bonus:18, why:'"ล้างก้นเด็กแต่สัมผัสไม่ได้" Theme 3'},
+  {id:4, av:'img', src:'char4.png', cn:'นร. ง', bonus:12, why:'eye contact + เส้นจริยธรรมตัวเอง'},
+  {id:5, av:'img', src:'char5.png', cn:'ครู จ', bonus:10, why:'ใช้ AI ส่วนตัว ตรง RQ น้อยกว่า'},
+  {id:6, av:'img', src:'char6.png', cn:'นร. ฉ', bonus:8,  why:'เน้นเกมการสอน ไม่ค่อยพูด ethical dilemma'},
+  {id:7, av:'img', src:'char7.png', cn:'นร. ช', bonus:16, why:'ครูใหม่สุด AI ไม่เข้าใจมนุษย์'},
 ];
 
 const ANS = [
@@ -378,8 +378,10 @@ function go(id){document.querySelectorAll('.scr').forEach(s=>s.classList.remove(
 
 /* ── char render ── */
 function charAv(c){
-  // supports emoji or <img src="..."> string
-  return c.av.startsWith('<img') ? `<div class="av">${c.av}</div>` : `<div class="av">${c.av}</div>`;
+  if(c.av==='img'){
+    return `<img src="${c.src}" style="width:72px;height:72px;object-fit:contain;object-position:center bottom;display:block;margin:0 auto">`;
+  }
+  return `<div class="av">${c.av}</div>`;
 }
 
 /* ── DRAFT ── */
@@ -422,7 +424,9 @@ function startGame(){
   ['a','b'].forEach(t=>{
     document.getElementById('sav'+t.toUpperCase()).innerHTML=
       G.teams[t].map(id=>{const c=CHARS.find(x=>x.id===id);
-        return c.av.startsWith('<img')?c.av:`<span>${c.av}</span>`;}).join('');
+        return c.av==='img'
+          ? `<img src="${c.src}" style="width:32px;height:32px;object-fit:contain;border-radius:6px;background:#000">`
+          : `<span>${c.av}</span>`;}).join('');
   });
   renderBoard();
   document.getElementById('sA').dataset.val='0';
